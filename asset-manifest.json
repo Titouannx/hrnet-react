@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/hrnet-react/static/css/main.db696001.css",
+    "main.js": "/hrnet-react/static/js/main.2adf1eb4.js",
+    "static/js/956.aabaa53f.chunk.js": "/hrnet-react/static/js/956.aabaa53f.chunk.js",
+    "static/js/267.84153d67.chunk.js": "/hrnet-react/static/js/267.84153d67.chunk.js",
+    "static/js/845.7e98056e.chunk.js": "/hrnet-react/static/js/845.7e98056e.chunk.js",
+    "static/js/453.c301cb13.chunk.js": "/hrnet-react/static/js/453.c301cb13.chunk.js",
+    "index.html": "/hrnet-react/index.html",
+    "main.db696001.css.map": "/hrnet-react/static/css/main.db696001.css.map",
+    "main.2adf1eb4.js.map": "/hrnet-react/static/js/main.2adf1eb4.js.map",
+    "956.aabaa53f.chunk.js.map": "/hrnet-react/static/js/956.aabaa53f.chunk.js.map",
+    "267.84153d67.chunk.js.map": "/hrnet-react/static/js/267.84153d67.chunk.js.map",
+    "845.7e98056e.chunk.js.map": "/hrnet-react/static/js/845.7e98056e.chunk.js.map",
+    "453.c301cb13.chunk.js.map": "/hrnet-react/static/js/453.c301cb13.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db696001.css",
+    "static/js/main.2adf1eb4.js"
+  ]
+}
