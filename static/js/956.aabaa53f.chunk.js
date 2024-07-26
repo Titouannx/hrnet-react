@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkhrnet_react=self.webpackChunkhrnet_react||[]).push([[956],{6956:(e,t,r)=>{r.r(t),r.d(t,{default:()=>l});r(5043);var a=r(579);const l=function(e){let{globalFilter:t,setGlobalFilter:r}=e;return(0,a.jsx)("div",{id:"search-container",children:(0,a.jsx)("input",{value:t||"",onChange:e=>r(e.target.value),placeholder:"Search..."})})}}}]);
+//# sourceMappingURL=956.aabaa53f.chunk.js.map
