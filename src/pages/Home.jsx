@@ -1,15 +1,17 @@
 import React from 'react';
 import CreateEmployeeForm from '../components/CreateEmployeeForm';
 import '../styles/Home.css';
+import { Link } from 'react-router-dom';
 
 function Home() {
+    console.log("Home component loaded");    
     return (
         <div className="home-container">
             <div className="title">
                 <h1>HRnet</h1>
             </div>
             <div className="containerLink">
-                <a href="/employees">View Current Employees</a>
+                <Link to="/employees">View Current Employees</Link>
                 <CreateEmployeeForm />
             </div>
         </div>

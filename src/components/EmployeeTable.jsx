@@ -22,16 +22,24 @@ function EmployeeTable({ columns, data, getTableProps, getTableBodyProps, header
                 ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-                {page.map(row => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => (
-                                <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            ))}
-                        </tr>
-                    );
-                })}
+                {page.length > 0 ? (
+                    page.map(row => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => (
+                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                ))}
+                            </tr>
+                        );
+                    })
+                ) : (
+                    <tr>
+                        <td colSpan={columns.length} style={{ textAlign: 'center' }}>
+                            No data available in table
+                        </td>
+                    </tr>
+                )}
             </tbody>
         </table>
     );

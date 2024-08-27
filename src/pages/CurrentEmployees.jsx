@@ -1,25 +1,29 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table';
-import axios from 'axios';
-//import EmployeeTable from '../components/EmployeeTable';
-//import PaginationControls from '../components/PaginationControls';
-//import SearchBar from '../components/SearchBar';
 import '../styles/CurrentEmployees.css';
-import { lazy } from 'react';
+import { Link } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
+import EmployeeTable from '../components/EmployeeTable';
+import PaginationControls from '../components/PaginationControls';
+import { useEmployees } from '../contexts/EmployeeContext';
 
-const SearchBar = lazy(() => import('../components/SearchBar'));
-const EmployeeTable = lazy(() => import('../components/EmployeeTable'));
-const PaginationControls = lazy(() => import('../components/PaginationControls'));
+// Function to format dates
+const formatDate = date => {
+    if (date instanceof Date) {
+        return date.toLocaleDateString(); // Customize the format as needed
+    }
+    return date; // If it's already a string or another type
+};
 
 function CurrentEmployeesPage() {
-    const [employees, setEmployees] = useState([]);
+    const { employees } = useEmployees();
 
-    useEffect(() => {
-        axios.get('data/employees.json')
-            .then(response => {
-                setEmployees(response.data);
-            });
-    }, []);
+    // Format employee data
+    const formattedEmployees = employees.map(emp => ({
+        ...emp,
+        startDate: formatDate(emp.startDate),
+        dateOfBirth: formatDate(emp.dateOfBirth),
+    }));
 
     const columns = useMemo(() => [
         { Header: 'First Name', accessor: 'firstName' },
@@ -51,7 +55,7 @@ function CurrentEmployeesPage() {
         setGlobalFilter
     } = useTable({
         columns,
-        data: employees,
+        data: formattedEmployees, // Use the formatted data
         initialState: { pageIndex: 0, pageSize: 10 }
     }, useGlobalFilter, useSortBy, usePagination);
 
@@ -79,7 +83,7 @@ function CurrentEmployeesPage() {
             </div>
             <EmployeeTable
                 columns={columns}
-                data={employees}
+                data={formattedEmployees} // Use the formatted data
                 getTableProps={getTableProps}
                 getTableBodyProps={getTableBodyProps}
                 headerGroups={headerGroups}
@@ -89,7 +93,7 @@ function CurrentEmployeesPage() {
             <PaginationControls
                 pageIndex={pageIndex}
                 pageSize={pageSize}
-                employeesLength={employees.length}
+                employeesLength={formattedEmployees.length} // Use the formatted data length
                 canPreviousPage={canPreviousPage}
                 canNextPage={canNextPage}
                 gotoPage={gotoPage}
@@ -98,7 +102,7 @@ function CurrentEmployeesPage() {
                 pageCount={pageCount}
                 pageOptions={pageOptions}
             />
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
         </div>
     );
 }

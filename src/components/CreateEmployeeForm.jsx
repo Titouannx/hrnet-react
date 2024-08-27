@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Select from 'react-select';
-import '../styles/CreateEmployeeForm.css';
-import states from '../data/states.json';
 import { EmployeeModal } from 'npm-modale-ta';
+import Select from 'react-select';
+import states from '../data/states.json';
+import DatePicker from 'react-datepicker';
+import '../styles/CreateEmployeeForm.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useEmployees } from '../contexts/EmployeeContext';
 
 function CreateEmployeeForm() {
     const [dateOfBirth, setDateOfBirth] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [street, setStreet] = useState('');
+    const [city, setCity] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [department, setDepartment] = useState(null);
+    const [state, setState] = useState(null);
+
+    const { addEmployee } = useEmployees();
 
     const departmentOptions = [
         { value: 'Sales', label: 'Sales' },
@@ -25,6 +36,20 @@ function CreateEmployeeForm() {
     }));
 
     const saveEmployee = () => {
+        const employee = {
+            firstName,
+            lastName,
+            dateOfBirth,
+            startDate,
+            street,
+            city,
+            state: state?.value,
+            zipCode,
+            department: department?.value
+        };
+
+        addEmployee(employee);
+
         setIsModalVisible(true); 
     };
 
@@ -37,10 +62,10 @@ function CreateEmployeeForm() {
             <h2>Create Employee</h2>
             <form id="create-employee">
                 <label htmlFor="first-name">First Name</label>
-                <input type="text" id="first-name" />
+                <input type="text" id="first-name" value={firstName} onChange={e => setFirstName(e.target.value)} />
 
                 <label htmlFor="last-name">Last Name</label>
-                <input type="text" id="last-name" />
+                <input type="text" id="last-name" value={lastName} onChange={e => setLastName(e.target.value)} />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
                 <DatePicker id="date-of-birth" selected={dateOfBirth} onChange={date => setDateOfBirth(date)} />
@@ -52,31 +77,33 @@ function CreateEmployeeForm() {
                     <legend>Address</legend>
 
                     <label htmlFor="street">Street</label>
-                    <input id="street" type="text" />
+                    <input id="street" type="text" value={street} onChange={e => setStreet(e.target.value)} />
 
                     <label htmlFor="city">City</label>
-                    <input id="city" type="text" />
+                    <input id="city" type="text" value={city} onChange={e => setCity(e.target.value)} />
 
                     <label htmlFor="state">State</label>
                     <Select
                         options={stateOptions}
-                        defaultValue={stateOptions[0]}
+                        value={state}
+                        onChange={setState}
                     />
 
                     <label htmlFor="zip-code">Zip Code</label>
-                    <input id="zip-code" type="number" />
+                    <input id="zip-code" type="number" value={zipCode} onChange={e => setZipCode(e.target.value)} />
                 </fieldset>
 
                 <label htmlFor="department">Department</label>
                 <Select
                     options={departmentOptions}
-                    defaultValue={departmentOptions[0]}
+                    value={department}
+                    onChange={setDepartment}
                 />
             </form>
             <div className='saveBtn'>
                 <button onClick={saveEmployee}>Save</button>
             </div>
-            <EmployeeModal isVisible={isModalVisible} onClose={closeModal} />
+            <EmployeeModal isVisible={isModalVisible} onClose={closeModal} message="Employee created!"/>
         </div>
     );
 }
